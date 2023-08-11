@@ -12,6 +12,14 @@ namespace DataAccessLayer.Concrete
         {
             Configuration = configuration;
         }
+        public Context( DbContextOptions<Context> options )
+                : base(options)
+        {
+        }
+
+        public Context()
+        {
+        }
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
         {
