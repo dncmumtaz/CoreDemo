@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,37 +11,38 @@ namespace DataAccessLayer.Repositories
 {
     public class GenericRepository<T> : IGenericDal<T> where T : class
     {
+        private Context _dbContext;
+
+        public GenericRepository(Context dbContext )
+        {
+            this._dbContext = dbContext;
+        }
         public void Delete( T item )
         {
-            using var c = new Context();
-            c.Remove( item );
-            c.SaveChanges();
+            _dbContext.Remove( item );
+            _dbContext.SaveChanges();
         }
 
         public T GetById( int id )
         {
-            using var c = new Context();
-            return c.Set<T>().Find( id);
+            return _dbContext.Set<T>().Find( id);
         }
 
         public List<T> GetListAll()
         {
-            using var c = new Context();
-            return c.Set<T>().ToList();
+            return _dbContext.Set<T>().ToList();
         }
 
         public void Insert( T item )
         {
-            using var c = new Context();
-            c.Add(item);
-            c.SaveChanges();
+            _dbContext.Add(item);
+            _dbContext.SaveChanges();
         }
 
         public void Update( T item )
         {
-            using var c = new Context();
-            c.Update( item );
-            c.SaveChanges();
+            _dbContext.Update( item );
+            _dbContext.SaveChanges();
         }
     }
 }
