@@ -5,9 +5,13 @@
     Layout = null;
 }
 
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 <!DOCTYPE html>
 
-<table>
+<table class="table table-bordered">
     <tr>
         <th>ID</th>
         <th>Kategory Adı</th>
@@ -21,6 +25,8 @@
             <td> @item.Id</td>
             <td> @item.Name</td>
             <td> @item.Status</td>
+            <td><a href="#" class=" btn btn-warning">Detaylar</a></td>
+            <td><a href="#" class=" btn btn-danger">Sil</a></td>
         </tr>
     }
 </table>
