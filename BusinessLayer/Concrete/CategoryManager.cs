@@ -43,5 +43,7 @@ namespace BusinessLayer.Concrete
         {
             _categoryDal.Update(category);
         }
+
+        //generate a function that retrieve DB items by priority
     }
 }
