@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class Blog
+    public class Blog:BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -15,7 +15,6 @@ namespace EntityLayer.Concrete
         public string Content { get; set; }
         public string ThumbnailImage { get; set; }
         public string Image { get; set; }
-        public string CreateDate { get; set; }
         public bool Status { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
