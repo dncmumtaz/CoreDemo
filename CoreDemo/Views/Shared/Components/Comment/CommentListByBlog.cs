@@ -15,9 +15,9 @@ namespace CoreDemo.Views.Shared.Components.Comment
             commentManager = new CommentManager(new EfCommentRepository(_dbContext));
 
         }
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(int id)
         {
-            var values = commentManager.GetList(4);
+            var values = commentManager.GetList(id);
             return View(values);
         }
     }
