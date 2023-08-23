@@ -1,9 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CoreDemo.Controllers
 {
 	public class CommentController : Controller
 	{
+		private Context _dbContext;
+		private readonly CommentManager _commentManager;
+
+		public CommentController( Context dbContext )
+		{
+			_dbContext = dbContext;
+			_commentManager = new CommentManager(new EfCommentRepository(_dbContext));
+		}
+
 		public IActionResult Index()
 		{
 			return View();
@@ -14,9 +26,10 @@ namespace CoreDemo.Controllers
 			return PartialView();
 		}
 
-		public PartialViewResult CommentListByBlog()
+		public PartialViewResult CommentListByBlog(int id)
 		{
-			return PartialView();
+			var values = _commentManager.GetList(id);
+			return PartialView(values);
 		}
 	}
 }

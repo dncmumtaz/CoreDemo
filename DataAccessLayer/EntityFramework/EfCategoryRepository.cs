@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 namespace DataAccessLayer.EntityFramework
 {
     public class EfCategoryRepository : GenericRepository<Category>, ICategoryDal
-    {
-        
+    {     
 
         public EfCategoryRepository( Context dbContext ) : base(dbContext)
         {
