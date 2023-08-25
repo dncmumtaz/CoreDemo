@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class Writer
-    {
-        [Key]
-        public int Id { get; set; }
+    public class Writer: BaseEntity
+    {        
         public string Name { get; set; }
         public string About { get; set; }
         public string Image { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
     }
 }
