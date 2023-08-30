@@ -27,7 +27,6 @@ namespace CoreDemo.Controllers
         public PartialViewResult SubscribeMail(NewsLetter p)
         {
             p.Status = true;
-            p.CreateDate = DateTime.Now;
             _newsLetterManager.AddNewsLetter(p);
             return PartialView();
         }
