@@ -23,6 +23,10 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+#region for error codes
+app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1", "?code ={0}");
+#endregion
+
 app.UseRouting();
 
 app.UseAuthorization();
