@@ -46,15 +46,3 @@ namespace CoreDemo.Controllers
 		}
 	}
 }
-/*
- * var dataValue = context.Writers.FirstOrDefault(x => x.Email == p.Email
-			&& x.Password == p.Password);
-
-            if (dataValue != null)
-            {
-				HttpContext.Session.SetString("Name", p.Email);
-				return RedirectToAction("Index", "Writer");
-
-			}
-
-			return View();*/
