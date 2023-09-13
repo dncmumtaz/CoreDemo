@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CoreDemo.Controllers
 {
@@ -77,6 +78,13 @@ namespace CoreDemo.Controllers
             }
 
             return View();
+        }
+
+        public IActionResult DeleteBlog(int id )
+        {
+            var blog = blogManager.GetById(id);
+            blogManager.TDelete(blog);
+            return RedirectToAction("BlogListByWriter");
         }
     }
 }
