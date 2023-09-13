@@ -18,19 +18,19 @@ namespace CoreDemo.Controllers
         private Context _dbContext;
         BlogManager blogManager;
 
-        public BlogController(Context dbContext)
+        public BlogController( Context dbContext )
         {
             _dbContext = dbContext;
             blogManager = new BlogManager(new EfBlogRepository(_dbContext));
         }
-        
+
         public IActionResult Index()
         {
             var values = blogManager.GetBlogListWithCategory();
             return View(values);
         }
 
-        public IActionResult BlogReadAll(int id)
+        public IActionResult BlogReadAll( int id )
         {
             ViewBag.i = id;
             var values = blogManager.GetBlogById(id);
@@ -80,11 +80,25 @@ namespace CoreDemo.Controllers
             return View();
         }
 
-        public IActionResult DeleteBlog(int id )
+        public IActionResult DeleteBlog( int id )
         {
             var blog = blogManager.GetById(id);
             blogManager.TDelete(blog);
             return RedirectToAction("BlogListByWriter");
         }
+
+        [HttpGet]
+        public IActionResult EditBlog( int id )
+        {
+            var blog = blogManager.GetById(id);
+            return View(blog);
+        }
+
+        [HttpPost]
+        public IActionResult EditBlog( Blog p )
+        {
+            return RedirectToAction("BlogListByWriter");
+        }
+
     }
 }
