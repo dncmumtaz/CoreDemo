@@ -90,6 +90,14 @@ namespace CoreDemo.Controllers
         [HttpGet]
         public IActionResult EditBlog( int id )
         {
+            CategoryManager categoryManager = new(new EfCategoryRepository(_dbContext));
+            List<SelectListItem> categoryValues = (from x in categoryManager.GetList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.Name,
+                                                       Value = x.Id.ToString(),
+                                                   }).ToList();
+            ViewBag.cv = categoryValues;
             var blog = blogManager.GetById(id);
             return View(blog);
         }
@@ -97,6 +105,7 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public IActionResult EditBlog( Blog p )
         {
+            blogManager.TUpdate(p);
             return RedirectToAction("BlogListByWriter");
         }
 
