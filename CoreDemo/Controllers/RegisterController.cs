@@ -35,7 +35,7 @@ namespace CoreDemo.Controllers
                 p.Status = true;
                 p.About = "Deneme test";
                 p.CreateDate = DateTime.Now;
-                writerManager.AddWriter(p);
+                writerManager.TAdd(p);
                 return RedirectToAction("Index", "Blog");
             }
 			else
