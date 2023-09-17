@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using CoreDemo.Models;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -77,6 +78,38 @@ namespace CoreDemo.Controllers
             }
 
             return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult WriterAdd()
+        {
+            return View();
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult WriterAdd(AddProfileImage p)
+        {
+            Writer writer = new Writer();
+            if(p.Image != null )
+            {
+                var extension = Path.GetExtension(p.Image.FileName);
+                var newImageName = Guid.NewGuid() + extension;
+                var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/", newImageName);
+                var stream = new FileStream(location, FileMode.Create);
+                p.Image.CopyTo(stream);
+                writer.Image = newImageName;
+            }
+            writer.Email = p.Email;
+            writer.Name = p.Name;
+            writer.Password = p.Password;
+            writer.Status = true;
+            writer.About = p.About;
+
+            writerManager.TAdd(writer);
+            return RedirectToAction("Index", "Dashboard");
         }
     }
 }
