@@ -20,6 +20,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<NewsLetter> NewsLetters { get; set; }
         public DbSet<BlogRayting> BlogsRayting { get; set;}
         public DbSet<Notification> Notifications { get; set;}
+        public DbSet<Message> Message { get; set;}
 
         protected override void OnModelCreating( ModelBuilder modelBuilder )
         {
