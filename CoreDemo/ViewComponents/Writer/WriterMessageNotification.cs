@@ -8,19 +8,17 @@ namespace CoreDemo.ViewComponents.Writer
     public class WriterMessageNotification : ViewComponent
     {
         private Context context;
-        private MessageManager messageManager;
+        private Message2Manager message2Manager;
 
         public WriterMessageNotification( Context context )
         {
             this.context = context;
-            messageManager = new MessageManager(new EfMessageRepository(context));
+            message2Manager = new Message2Manager(new EfMessage2Repository(context));
         }
 
         public IViewComponentResult Invoke(  )
-        {
-            string p;
-            p = "mail@mail.com";
-            var values = messageManager.GetInboxListByWirter(p);
+        {   
+            var values = message2Manager.GetInboxListByWriter(2);
             return View(values);
         }
     }

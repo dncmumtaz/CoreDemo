@@ -21,10 +21,23 @@ namespace DataAccessLayer.Concrete
         public DbSet<BlogRayting> BlogsRayting { get; set;}
         public DbSet<Notification> Notifications { get; set;}
         public DbSet<Message> Message { get; set;}
+        public DbSet<Message> Message2 { get; set;}
 
         protected override void OnModelCreating( ModelBuilder modelBuilder )
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(Context).Assembly);
+
+            modelBuilder.Entity<Message2>()
+                .HasOne(x => x.SenderUser)
+                .WithMany(y => y.WriterSender)
+                .HasForeignKey(z => z.SenderId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Message2>()
+               .HasOne(x => x.RecieverUser)
+               .WithMany(y => y.WriterReceiver)
+               .HasForeignKey(z => z.RecieverId)
+               .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }
