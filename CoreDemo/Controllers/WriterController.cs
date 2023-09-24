@@ -21,8 +21,12 @@ namespace CoreDemo.Controllers
             this.context = context;
             writerManager = new WriterManager(new EfWriterRepository(context));
         }
+
+        [Authorize]
         public IActionResult Index()
         {
+            var userName = User.Identity.Name;
+            ViewBag.UserName = userName;
             return View();
         }
 
