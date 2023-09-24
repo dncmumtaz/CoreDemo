@@ -21,7 +21,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<BlogRayting> BlogsRayting { get; set;}
         public DbSet<Notification> Notifications { get; set;}
         public DbSet<Message> Message { get; set;}
-        public DbSet<Message> Message2 { get; set;}
+        public DbSet<Message2> Message2s { get; set;}
 
         protected override void OnModelCreating( ModelBuilder modelBuilder )
         {

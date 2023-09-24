@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230920201640_add_mess2_table")]
-    partial class add_mess2_table
+    [Migration("20230921071558_add_msg2_table")]
+    partial class add_msg2_table
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
