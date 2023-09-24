@@ -17,7 +17,9 @@ namespace CoreDemo.ViewComponents.Writer
         }
         public IViewComponentResult Invoke()
         {
-            var values = writerManager.GetWriterById(1);
+            var userMail = User.Identity.Name;
+            var writerId =  context.Writers.Where(x => x.Email == userMail).Select(x => x.Id).FirstOrDefault();
+            var values = writerManager.GetWriterById(writerId);
             return View(values);
         }
     }

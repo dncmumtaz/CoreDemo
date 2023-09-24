@@ -12,16 +12,16 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace CoreDemo.Controllers
 {
-    [AllowAnonymous]
+
     public class BlogController : Controller
     {
-        private Context _dbContext;
+        private Context context;
         BlogManager blogManager;
 
         public BlogController( Context dbContext )
         {
-            _dbContext = dbContext;
-            blogManager = new BlogManager(new EfBlogRepository(_dbContext));
+            this.context = dbContext;
+            blogManager = new BlogManager(new EfBlogRepository(context));
         }
 
         public IActionResult Index()
@@ -39,14 +39,16 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var values = blogManager.GetListWithCategoryByWriterBM(1);
+            var userMail = User.Identity.Name;
+            var writerId = context.Writers.Where(x => x.Email == userMail).Select(x => x.Id).FirstOrDefault();
+            var values = blogManager.GetListWithCategoryByWriterBM(writerId);
             return View(values);
         }
 
         [HttpGet]
         public IActionResult BlogAdd()
         {
-            CategoryManager categoryManager = new(new EfCategoryRepository(_dbContext));
+            CategoryManager categoryManager = new(new EfCategoryRepository(context));
             List<SelectListItem> categoryValues = (from x in categoryManager.GetList()
                                                    select new SelectListItem
                                                    {
@@ -60,12 +62,14 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public IActionResult BlogAdd( Blog p )
         {
+            var userMail = User.Identity.Name;
+            var writerId = context.Writers.Where(x => x.Email == userMail).Select(x => x.Id).FirstOrDefault();
             BlogValidator validationRules = new BlogValidator();
             ValidationResult validationResult = validationRules.Validate(p);
             if ( validationResult.IsValid )
             {
                 p.Status = true;
-                p.Id = 8;
+                p.Id = writerId;
                 blogManager.TAdd(p);
                 return RedirectToAction("BlogListByWriter", "Blog");
             }
@@ -90,7 +94,7 @@ namespace CoreDemo.Controllers
         [HttpGet]
         public IActionResult EditBlog( int id )
         {
-            CategoryManager categoryManager = new(new EfCategoryRepository(_dbContext));
+            CategoryManager categoryManager = new(new EfCategoryRepository(context));
             List<SelectListItem> categoryValues = (from x in categoryManager.GetList()
                                                    select new SelectListItem
                                                    {
@@ -105,6 +109,9 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public IActionResult EditBlog( Blog p )
         {
+            var userMail = User.Identity.Name;
+            var writerId = context.Writers.Where(x => x.Email == userMail).Select(x => x.Id).FirstOrDefault();
+            p.Id = writerId;
             blogManager.TUpdate(p);
             return RedirectToAction("BlogListByWriter");
         }
