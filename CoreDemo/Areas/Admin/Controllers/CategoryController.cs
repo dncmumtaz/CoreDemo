@@ -2,6 +2,7 @@
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 
 namespace CoreDemo.Areas.Admin.Controllers
 {
@@ -18,9 +19,9 @@ namespace CoreDemo.Areas.Admin.Controllers
             categoryManager = new CategoryManager(new EfCategoryRepository(_dbContext));
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            var values = categoryManager.GetList();
+            var values = categoryManager.GetList().ToPagedList(page,2);
             return View(values);
         }
     }
