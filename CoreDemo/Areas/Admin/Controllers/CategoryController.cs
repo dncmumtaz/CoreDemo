@@ -54,5 +54,12 @@ namespace CoreDemo.Areas.Admin.Controllers
 
             return View();
         }
+
+        public IActionResult DeleteCategory(int id)
+        {
+            var value = categoryManager.GetById(id);
+            categoryManager.TDelete(value);
+            return RedirectToAction("Index");
+        }
     }
 }
