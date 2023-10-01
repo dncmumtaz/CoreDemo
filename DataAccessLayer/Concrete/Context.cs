@@ -1,10 +1,11 @@
 ﻿using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Concrete
 {
-    public class Context: DbContext
+    public class Context: IdentityDbContext<AppUser>
     {
         public Context( DbContextOptions<Context> options )
                 : base(options)
@@ -38,6 +39,8 @@ namespace DataAccessLayer.Concrete
                .WithMany(y => y.WriterReceiver)
                .HasForeignKey(z => z.RecieverId)
                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
