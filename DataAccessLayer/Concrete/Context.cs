@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Concrete
 {
-    public class Context: IdentityDbContext<AppUser>
+    public class Context: IdentityDbContext<AppUser, AppRole,int>
     {
         public Context( DbContextOptions<Context> options )
                 : base(options)

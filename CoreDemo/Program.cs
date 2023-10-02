@@ -1,4 +1,5 @@
 using DataAccessLayer.Concrete;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -11,8 +12,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Context>( options
     => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("DataAccessLayer")));
-
+builder.Services.AddIdentity<AppUser, AppRole>(
+    x =>
+    {
+        x.Password.RequireNonAlphanumeric = false;
+        x.Password.RequireUppercase = false;
+        x.Password.RequiredLength = 3;
+    }).AddEntityFrameworkStores<Context>();
 builder.Services.AddSession();
+
 
 builder.Services.AddMvc(routes =>
 {
