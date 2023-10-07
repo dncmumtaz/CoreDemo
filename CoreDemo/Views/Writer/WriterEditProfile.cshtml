@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrete.Writer
+﻿@model EntityLayer.Concrete.AppUser
 
 @{
     ViewData["Title"] = "WriterEditProfile";
@@ -16,15 +16,19 @@
                 <form class="forms-sample">
                     <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        @Html.TextBoxFor(x => x.Name, new {@class = "form-control"})
+                        @Html.TextBoxFor(x => x.NameSurname, new {@class = "form-control"})
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail3">Email address</label>
                         @Html.TextBoxFor(x => x.Email, new {@class = "form-control"})
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputEmail3">UserName</label>
+                        @Html.TextBoxFor(x => x.UserName, new {@class = "form-control"})
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputPassword4">Password</label>
-                        @Html.TextBoxFor(x => x.Password, new {@class = "form-control"})
+                        @Html.PasswordFor(x => x.PasswordHash, new {@class = "form-control"})
                     </div>
                     <div class="form-group">
                         <label>File upload</label>
@@ -35,10 +39,6 @@
                                 <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
                             </span>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleTextarea1">About</label>
-                        @Html.TextAreaFor(x => x.About,10,3, new {@class = "form-control"})
                     </div>
                     <button type="submit" class="btn btn-gradient-primary mr-2">Edit</button>
                     <button class="btn btn-light">Cancel</button>

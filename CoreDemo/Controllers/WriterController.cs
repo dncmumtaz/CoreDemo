@@ -60,10 +60,13 @@ namespace CoreDemo.Controllers
         public IActionResult WriterEditProfile()
         {
             var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x =>  x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.Email == userMail).Select(x => x.Id).FirstOrDefault();
-            var values = writerManager.GetById(writerId);
+            var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
+            UserManager userManager = new UserManager(new EfUserRepository(context));
+            var id = context.Users.Where(x => x.Email == userMail).Select(x => x.Id).FirstOrDefault();
+            var values = userManager.GetById(id);
+
             return View(values);
+
         }
 
         [HttpPost]
@@ -78,7 +81,7 @@ namespace CoreDemo.Controllers
                 p.Id = 1;
                 p.Image = "asdf";
                 writerManager.TUpdate(p);
-                return RedirectToAction( "Index", "Dashboard");
+                return RedirectToAction("Index", "Dashboard");
             }
             foreach ( var item in result.Errors )
             {
@@ -98,10 +101,10 @@ namespace CoreDemo.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult WriterAdd(AddProfileImage p)
+        public IActionResult WriterAdd( AddProfileImage p )
         {
             Writer writer = new Writer();
-            if(p.Image != null )
+            if ( p.Image != null )
             {
                 var extension = Path.GetExtension(p.Image.FileName);
                 var newImageName = Guid.NewGuid() + extension;
