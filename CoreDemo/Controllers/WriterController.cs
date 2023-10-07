@@ -6,7 +6,9 @@ using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework;
 
 namespace CoreDemo.Controllers
 {
@@ -15,6 +17,7 @@ namespace CoreDemo.Controllers
 
         private readonly Context context;
         private readonly WriterManager writerManager;
+        private readonly UserManager<AppUser> userManager;
 
         public WriterController( Context context )
         {
@@ -56,7 +59,8 @@ namespace CoreDemo.Controllers
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
-            var userMail = User.Identity.Name;
+            var userName = User.Identity.Name;
+            var userMail = context.Users.Where(x =>  x.UserName == userName).Select(y => y.Email).FirstOrDefault();
             var writerId = context.Writers.Where(x => x.Email == userMail).Select(x => x.Id).FirstOrDefault();
             var values = writerManager.GetById(writerId);
             return View(values);

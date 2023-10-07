@@ -23,14 +23,14 @@ namespace CoreDemo.Controllers
             this.context = dbContext;
             blogManager = new BlogManager(new EfBlogRepository(context));
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var values = blogManager.GetBlogListWithCategory();
             return View(values);
         }
-
-        public IActionResult BlogReadAll( int id )
+		[AllowAnonymous]
+		public IActionResult BlogReadAll( int id )
         {
             ViewBag.i = id;
             var values = blogManager.GetBlogById(id);

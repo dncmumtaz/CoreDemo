@@ -2,11 +2,13 @@
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreDemo.Controllers
 {
-    public class ContactController : Controller
+	[AllowAnonymous]
+	public class ContactController : Controller
     {
         private Context context;
         private ContactManager contactManager;
